@@ -29,7 +29,7 @@ From [Vuejs Doc](https://vuejs.org/guide/introduction.html#which-to-choose)
 > - Go with Composition API + Single-File Components if you plan to build full applications with Vue.
 
 ## Jump into Reactivity Fundamentals 
-Now we have an overview of the Composition Api and we know when use it, but we don't know yet how to use the Vue primary functionality:
+Now we have an overview of the Composition Api and we know when to use it, but we don't know yet how to use the Vue primary functionality:
 
 ### Reactivity
 Start always from the documentation:
@@ -41,7 +41,7 @@ import { reactive } from 'vue'
 const state = reactive({ count: 0 })
 ```
 
-With the Composition Api we have to import the function we want to use in the script, in this case `reactive`, then we'll can use it to create a reactive state. This function accept an object and return a Proxy object.
+With the Composition Api we have to import the function we want to use in the script, in this case `reactive`, then we’ll use it to create a reactive state. This function accepts an object and return a Proxy object.
 
 From the documentation
 > Reactive objects are **JavaScript Proxies** and behave just like normal objects. The difference is that Vue is able to track the property access and mutations of a reactive object.
@@ -50,7 +50,7 @@ From the documentation
 ##### What is a `Proxy` object?
 [Proxy MDN reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 
 
-*In the previuos version of Vue, instead the reactivity was based on Getter and Setter.*
+*In the previous version of Vue, instead, the reactivity was based on Getter and Setter.*
 [Reactivity Vuejs 2](https://v2.vuejs.org/v2/guide/reactivity.html)
 
 > When you pass a plain JavaScript object to a Vue instance as its data option, Vue will walk through all of its properties and convert them to getter/setters using **Object.defineProperty**
@@ -132,8 +132,7 @@ As everyone knows, I love colors, so for this example, I have imagined a bunch o
 Our script will allow us to move the colored bubbles within the relative basket with a click, and with another click, we can send the bubble from the basket to the top of the bunch.
 Finally, we can change the color of bubbles by dragging and dropping a colored tab on a bubble.
 
-![screen 1](./screens/Schermata%202022-03-22%20alle%2018.14.22.png)
-
+![Screen 1](./screens/Schermata%202022-03-22%20alle%2018.14.22.png)
 
 ## Where to start?
 In this situation, we'll use a reactive `state` with 3 properties `bubbles`, `baskets`, `availableColors`.
@@ -284,11 +283,11 @@ const state = reactive({
 
 
 #### Second Step: Template
-We create a basic layout, we have: 
+Create a basic layout, we have: 
 * `header`, with instructions,
 * `.palette` that contains the available colors tabs,
 * `.container` that contains our bubbles and relative baskets.
-We pass some custom properties to css through the `style` attribute in order to handle the bubbles color and diameter.
+We pass some custom properties to css through the `style` attribute in order to handle the color and diameter of the bubble.
 
 ```JS
 <li
@@ -559,12 +558,12 @@ Now use (**Vuejs Devtools**)[https://chrome.google.com/webstore/detail/vuejs-dev
 
 Try now to change the property color of one `bubbles` element, the color will change also in the browser: **this is the reactivity at work!**
 
-![Vue Dev Tools](./screens/Schermata%202022-03-22%20alle%2018.18.52.png)
+![Vuejs Devtools](./screens/Schermata%202022-03-22%20alle%2018.18.52.png)
 
 #### Third Step: methods
 **`toBasket(index)`**
 
-Clicking on a bubble we have to remove it from the `state.bubbles` and add to the relative `state.basket`.
+Clicking on a bubble we have to remove it from the `state.bubbles` and add it to the relative `state.basket`.
 
 ```JS
 <script setup>
@@ -608,17 +607,16 @@ In the `.stack-list>li` add `@click` handler
     </div> 
 ```
 
-Ok, now if we click on a bubble it disappear from the left and appear in the relative basket on the right.
+Ok, now if we click on a bubble it disappears from the left and appears in the relative basket on the right.
 
-![screen 2](./screens/Schermata%202022-03-22%20alle%2018.14.53%201.png)
+![Screen 2](./screens/Schermata%202022-03-22%20alle%2018.14.53%201.png)
 
 #### Let's see **Vue Dev Tools**
 ![Vue Dev Tools](./screens/Schermata%202022-03-22%20alle%2018.22.44.png)
-
 Now the `state.bubbles` array have 18 elements and the `state.baskests[0].bubbles` have 1 element.
 
 #### Add `toTopStack()` function
-`toTopStack()` will have to remove the bubble from a basket and add it on the stack's top, when we click on a bubble.
+`toTopStack()` will have to remove the bubble from a basket and add it on the stack's top when we click on a bubble.
 
 ```JS
 function toTopStack(indexBasket,indexBubble) {
@@ -667,7 +665,7 @@ function toTopStack(indexBasket,indexBubble) {
 
 ### Click event is very simple, add a little pepper! Drag and Drop API
 
-![screen 2](./screens/Schermata%202022-03-22%20alle%2018.24.56.png)
+![Drag drop](./screens/Schermata%202022-03-22%20alle%2018.24.56.png)
 
 **What is HTML 5  drag and drop API?**
 These are good places to start:
@@ -675,19 +673,19 @@ These are good places to start:
 
 [# Using the HTML5 Drag and Drop API](https://web.dev/drag-and-drop/?gclid=CjwKCAjwxOCRBhA8EiwA0X8hi6v5K5f4OR98lH6Mmtg9uda79z2Srx7uwQ7EKtGlW4o10IeGZt8eSRoCgiQQAvD_BwE)
 
-Go on, put the attribute `draggable="true"` to the `.palette>li` and the handler `@dragstart` wich calls our method `setColor($event, color)`, we pass it the event and the color object itself.
+Go on, put the attribute `draggable="true"` to the `.palette>li` and the handler `@dragstart` which calls our method `setColor($event, color)`, we pass it the event and the color object itself.
 
 With these attributes, `.palette>li` will become draggable and when we start to drag the `setColor` method will be called.
 
 On the `.stack-list>li` put 
 ```          
 	@dragover.prevent
-  	@dragenter.prevent
-  	@drop="changeColor($event, indexBubble)"
+  @dragenter.prevent
+  @drop="changeColor($event, indexBubble)"
 ```
 
 We prevent the default behaviors `dragover` and `dragenter` end call on `drop` event our method `changeColor($event, indexBubble)`.
-This methods accept the event and the index of bubble, that we use to search the right element in the `state.bubbles` array.
+These methods accept the event and the index of bubble, that we use to search the right element in the `state.bubbles` array.
 
 ```HTML
   <div class="container">
@@ -729,7 +727,7 @@ This methods accept the event and the index of bubble, that we use to search the
     </div>
 ```
 
-Now we use the `dataTransfer` object to set the drop effect and the allowed effect, as well as the data to be transferred by chosing its name.
+Now we use the `dataTransfer` object to set the drop effect and the allowed effect, as well as the data to be transferred by choosing its name.
 
 ```JS
 function setColor(e, color) {
@@ -749,7 +747,7 @@ function changeColor(e, bubbleIndex) {
 }
 ```
 
-#### Why we use `JSON.stringify`?
+#### Why do we use `JSON.stringify`?
 We can transfer different types of data, including plain text, URLs, HTML code, files, etc.
 In this case, we want to transfer an object literal, so we can use `JSON` object to` Stringify`, transform the object in a JSON formatted string, and then `Parse`,  transform the string back into an object.
 
@@ -762,13 +760,12 @@ References:
 
 
 #### In the Vue Dev Tools we can see setup (others)
-
 ![Vue Dev Tools](./screens/Schermata%202022-03-22%20alle%2018.24.08.png)
 
 Here we find all the functions we have used in setup script, including the reactive function.
 
 ## Conclusions: 
-### What we have learnt?
+### What we have learned?
 Updating our knowledge may not be easy, but we have to fix in mind what is our goal.
 
 In my opinion, we learn effectively in two situations: 
@@ -776,11 +773,10 @@ when we have a specific task to execute or when we create something for us.
 In either case, we have a project in mind, we study the specification step by step and have real problems to solve.
 
 ### Roadmap to study
-1. First, decide what is the argument to study
-2. Use Documentation, in this case we have used Vuejs framework, then use other resources like MDN or w3school to learn more
+1. Decide first what argument to study
+2. Use Documentation, in this case, we have used Vuejs framework, then use other resources like MDN or w3school to learn more
 3. Image a real-life situation end test your new knowledge
 4. Read again documentation, explore and examine in-depth
 5. Finally try to explain everything to someone.
-
 
 
