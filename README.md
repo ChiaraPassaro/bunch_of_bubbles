@@ -1,3 +1,9 @@
+## How to run the app
+`npm run preview`
+
+<hr>
+
+
 # Update our knowledge, where to start?
 ## How to study Vue 3 new features
 My students often ask me how to keep their knowledge up to date after they complete the Boolean Careers course.
@@ -775,3 +781,6 @@ In either case, we have a project in mind, we study the specification step by st
 3. Image a real-life situation end test your new knowledge
 4. Read again documentation, explore and examine in-depth
 5. Finally try to explain everything to someone.
+
+
+
