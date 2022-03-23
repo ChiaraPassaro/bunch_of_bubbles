@@ -41,7 +41,7 @@ import { reactive } from 'vue'
 const state = reactive({ count: 0 })
 ```
 
-With the Composition Api we have to import the function we want to use in the script, in this case `reactive`, then we’ll use it to create a reactive state. This function accepts an object and return a Proxy object.
+With the Composition Api we have to import the function we want to use in the script, in this case `reactive`, then we’ll use it to create a reactive state. This function accepts an object and returns a Proxy object.
 
 From the documentation
 > Reactive objects are **JavaScript Proxies** and behave just like normal objects. The difference is that Vue is able to track the property access and mutations of a reactive object.
